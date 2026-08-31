@@ -24,6 +24,17 @@
 
   *{ box-sizing: border-box; }
 
+  body::after{
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    pointer-events: none;
+    opacity: 0.025;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
   ::selection{ background: var(--ink); color: var(--bg); }
 
   html{ scroll-behavior: smooth; }
@@ -111,7 +122,22 @@
   }
 
   .nav-toggle{
-    display:none;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: none;
+    padding: 0;
+  }
+
+  .nav-toggle span{
+    display: block;
+    height: 1px;
+    background: var(--ink);
+    width: 100%;
   }
 
   /* ---------- footer ---------- */
@@ -267,6 +293,21 @@
     font-size: 0.85rem;
     color: var(--camel);
     letter-spacing: 0.02em;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .swatch-dot{
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    display: inline-block;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.15);
+  }
+
+  .index-row:hover .swatch-dot{
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.3);
   }
 
   .index-name{
@@ -279,6 +320,7 @@
     font-size: 0.9rem;
     color: var(--stone);
     white-space: nowrap;
+    font-variant-numeric: tabular-nums;
   }
 
   .index-row a.index-name-link{
@@ -345,6 +387,14 @@
     flex-direction: column;
   }
 
+  @media (prefers-reduced-motion: no-preference){
+    .shop-card{ transition: background-color 0.2s ease; }
+  }
+
+  .shop-card:hover{
+    background: var(--stone-light);
+  }
+
   .shop-card .garment-art{
     align-self: center;
     width: 130px;
@@ -388,10 +438,35 @@
 
   .shop-card .index-price{ color: var(--ink); }
 
+  #app{
+    opacity: 0;
+  }
+
+  @media (prefers-reduced-motion: no-preference){
+    #app{
+      animation: fadeIn 0.35s ease forwards;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    #app{ opacity: 1; }
+  }
+
+  @keyframes fadeIn{
+    to{ opacity: 1; }
+  }
+
   .view-link{
     font-size: 0.85rem;
     border-bottom: 1px solid var(--ink);
   }
+
+  .view-link:hover{
+    color: var(--camel);
+    border-bottom-color: var(--camel);
+  }
+
+  .breadcrumb a:hover{ color: var(--ink); }
 
   /* ---------- product page ---------- */
 
@@ -400,8 +475,6 @@
     font-size: 0.85rem;
     color: var(--stone);
   }
-
-  .breadcrumb a:hover{ color: var(--ink); }
 
   .product-view{
     padding: 40px 0 100px;
@@ -563,11 +636,50 @@
     border-bottom: 1px solid var(--ink);
   }
 
+
+  /* ---------- fabric swatch art ---------- */
+
+  .art-coat, .art-trouser, .art-shirt{
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
+  }
+
+  .art-coat{
+    background-image: linear-gradient(180deg, rgba(0,0,0,0.12), rgba(0,0,0,0.4)), url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAcFBQYFBAcGBgYIBwcICxILCwoKCxYPEA0SGhYbGhkWGRgcICgiHB4mHhgZIzAkJiorLS4tGyIyNTEsNSgsLSz/2wBDAQcICAsJCxULCxUsHRkdLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCz/wAARCAFKAQQDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAEH/8QAIBABAAMBAAIDAQEBAAAAAAAAAAERQTEhYVFxgbFCkf/EABYBAQEBAAAAAAAAAAAAAAAAAAABAv/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AMhAYaAOAAAAlAoAAHigAAIMAAAAAADQPAAAABYAWAAcNAAAAAAAOgAB/AAAAAAACQACQA6aAAAAAAAAAGAAScAAK9AGAAAAAABoAAAAAAAAAAAHQAAAAAgAAAAAAAAAAAAPoAAAMAAsAAAAAAANAAAAAAAAAADAPZIAFBoAVYAJ+lgogC6IaIolrgoJc0ApSXJMgolyXIKIWCiALwSywUS5LBRPJcgokSApqFgoln6C4IAokzIIACgAAAHoNAAwACQAADoAAAAAAABgAAAFAAAAAAAAAAAAAAGGgAAAAAAaAAAAAAfQAAABoAUAAAAAHgAAAAAAAAAAAAACQw0DDQ8AAAAAaBIAAAAAAAAAAAdADgfYBAAAAWaGgAAAAcAAAAMJPwAAAwNAAADAAAAs0AOAAH6AAAB9AEgAGgAAAAAAAAAHQAAAMAAAAAJAAAgAMAAgAAENAAAAAAJAADgAHJAAAAoAAAIAAAABQAQIACgASYv4FABNBVEAUQBRAFEAUQBRDQUQBZEAUQBRAFEoBRAFoTAFEOgogC9EAAAAgAEUAAAMAAAAAAwAAAkAAwLAAAAADAAEBQAAAAAAAN4ABAABAAAAaAABoAAAAGAAGooFAAAABqAsAAAAikgAAAICgAAQAIoAAAAAejQAwwACQRQAAAAAAA/oE+eggoAGmgdAAAAD2mAoAAigAAAYABgAAIogKACKAAAAAAAH/AAAAAMAAAAANAEUACjylAugAYABXgAAAAEBQAAAOgAAABABoAgAAAAAB/QADwAAAAAAABgdAA0ADQAAAARQAAAC6wBF8ICqgUBaoAtloAp4QBbSwBTwgAaAKIAtoaQC6IAWvUAFQAVAFE0BRAFv2J4AAAIAAAAAAAAAANDoAQAAaAaAGAAAAAAAAAAAAAAYdXU0AJ4aAYafAAH+QAlfkECOgBoABpPJACQAMI4ABgAiz2QBJ6vwAB8ABHfwgAMQFEnoD//Z);
+  }
+
+  .art-trouser{
+    background-image: linear-gradient(180deg, rgba(0,0,0,0.08), rgba(0,0,0,0.38)), url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAcFBQYFBAcGBgYIBwcICxILCwoKCxYPEA0SGhYbGhkWGRgcICgiHB4mHhgZIzAkJiorLS4tGyIyNTEsNSgsLSz/2wBDAQcICAsJCxULCxUsHRkdLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCz/wAARCAFKAQQDASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAAAAECBv/EAB0QAQEBAQADAQEBAAAAAAAAAAARQQEhMYFhkXH/xAAWAQEBAQAAAAAAAAAAAAAAAAAAAQX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwDlAGU0AAUAAAARYgKAIaAAAKAAACAYAAAACgAgAAcDAAANAAAADTQBFFAAABAAARQBFAAFAABFEAAEUAABFAALAEpRAUPaApQApRAUoAVagBSgAAKUAFSiApQA8FAQpfCKBSgKUvAEKUAP6AAAKfQBAAVFAQBBVAEABQAQAARQUAEMEUBFAAAABQAAAQRQAABFAAAAABFAAAD0AAgKIoAAAGAAgKACYoAIoCCgAlKABQUSgKJSguCUBRKXwAqUoKJSgsMSlBTqUvkFEpQUSlBRCgolKCiUoKJSgBQARQRRAXEUBFQAXBAFEBQARQAABBQAAA1AVRAQVAFEUEUQFCgAIoKigAAgoCKICggAoCKgAKkBUFQARRQARUXgIogAoCYogHj9DoCiKgIqKKigIKmgCgIACicUBBQAABFAQUBFABFBBQAQBQT2ALf8ASlBApQAvkQBaUAKVAFKgC0oAFDQKUQFKigFEBb0pxAUvRAWl6igUqKBSoAv3gfAEBcUQVABU4CooAgAKIgqAoCgIKgKIACiAIAH4KoAgHpUUEUQFlDgAJoCoAAHQBQEVABUUAAEFQAXUA6ACiAKgAAoICgigCAagv8AA+iholSgoU5QFQBTUpQURKDScQBo1KAqH0oCpSgqACoFAAA8qgAqGgKiUGkOAAUBAAVAAABUFBFQAAAAAMVAVABUFBAUEAAAADQAAAAChKAAAAAAYAqACoAKlAAAVABUAAAFxAAVADAAAAFQAOgCh8AQ8gAB7EABQAAAA0AAMAAAAEABQAQAAoAoAABogAKQAEAUFQAABUAFQMBUABUABUAFQFQUEAAABdQUEAAKACoAAAAAAAAAKgB9AAAAAAAAAAAABQQAAAAAAFoIABP0AAAAAA4GgAAAAqAAAABgAAAAAAAAHgAAAAAAAAAAQBRAFEAUQwFEAUQBRAFEAUQBRAFEAUQBRFAEAUQBRAFEAAxdBA0AFQANOegOBoALib0ANABQEAwAxeek6AHAAXvtOgAoIB32ABgAAAcAf//Z);
+  }
+
+  .art-shirt{
+    background-image: linear-gradient(180deg, rgba(255,255,255,0.22), rgba(255,255,255,0.02)), url(data:image/jpeg;base64,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);
+    box-shadow: inset 0 0 0 1px rgba(28,27,25,0.1);
+  }
+
+  .art-coat svg, .art-trouser svg{
+    color: var(--cream);
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.35));
+  }
+
+  .art-shirt svg{
+    color: var(--ink);
+  }
+
+  .shop-card .garment-art{
+    border-radius: 2px;
+  }
+
+  .product-art{
+    border-radius: 2px;
+  }
+
   /* ---------- responsive ---------- */
 
   @media (max-width: 860px){
     .frame{ padding: 0 20px; }
-    .site-nav{ gap: 22px; }
     .hero-inner{ padding: 88px 20px 72px; }
     .manifesto{ grid-template-columns: 1fr; gap: 20px; }
     .shop-grid{ grid-template-columns: 1fr; }
@@ -575,6 +687,40 @@
     .principles{ grid-template-columns: 1fr; gap: 26px; }
     .index-row{ grid-template-columns: 60px 1fr; row-gap: 6px; }
     .index-price{ grid-column: 2; }
+  }
+
+  @media (max-width: 640px){
+    .nav-toggle{ display: flex; }
+
+    .site-header{
+      position: relative;
+    }
+
+    .site-nav{
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      gap: 0;
+      background: var(--bg);
+      border-bottom: 1px solid var(--line);
+      max-height: 0;
+      overflow: hidden;
+    }
+
+    @media (prefers-reduced-motion: no-preference){
+      .site-nav{ transition: max-height 0.25s ease; }
+    }
+
+    .site-nav.open{
+      max-height: 220px;
+    }
+
+    .site-nav a{
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--line);
+    }
   }
 
 </style>
@@ -586,11 +732,14 @@
   <div class="frame">
     <header class="site-header">
       <a class="wordmark" href="#/home">Uni</a>
-      <nav class="site-nav">
+      <nav class="site-nav" id="site-nav">
         <a href="#/shop" data-route="shop">Shop</a>
         <a href="#/about" data-route="about">About</a>
         <a href="#/contact" data-route="contact">Contact</a>
       </nav>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span>
+      </button>
     </header>
 
     <main id="app"></main>
@@ -667,12 +816,18 @@
     </svg>`
   };
 
+  const SWATCH = {
+    coat: "#2C2924",
+    trouser: "#6E5436",
+    shirt: "#E7E0CE"
+  };
+
   function indexList(){
     return `
       <div class="index-list">
         ${PRODUCTS.map(p => `
           <div class="index-row">
-            <span class="index-code">${p.code}</span>
+            <span class="index-code"><span class="swatch-dot" style="background:${SWATCH[p.art]}"></span>${p.code}</span>
             <a class="index-name-link" href="#/product/${p.id}">
               <span class="index-name">${p.name}</span>
             </a>
@@ -713,8 +868,8 @@
       <div class="shop-grid">
         ${PRODUCTS.map(p => `
           <div class="shop-card">
-            <div class="garment-art">${ART[p.art]}</div>
-            <span class="index-code">${p.code}</span>
+            <div class="garment-art art-${p.art}">${ART[p.art]}</div>
+            <span class="index-code"><span class="swatch-dot" style="background:${SWATCH[p.art]}"></span>${p.code}</span>
             <h3>${p.name}</h3>
             <p class="desc">${p.short}</p>
             <div class="card-footer">
@@ -734,7 +889,7 @@
         <a href="#/shop">Shop</a> / ${p.code}
       </div>
       <section class="product-view">
-        <div class="product-art">${ART[p.art]}</div>
+        <div class="product-art art-${p.art}">${ART[p.art]}</div>
         <div class="product-info">
           <span class="index-code">${p.code}</span>
           <h2>${p.name}</h2>
@@ -840,6 +995,20 @@
   }
 
   window.addEventListener("hashchange", render);
+
+  const navToggle = document.getElementById("nav-toggle");
+  const siteNav = document.getElementById("site-nav");
+  navToggle.addEventListener("click", () => {
+    const isOpen = siteNav.classList.toggle("open");
+    navToggle.setAttribute("aria-expanded", String(isOpen));
+  });
+  siteNav.addEventListener("click", (e) => {
+    if (e.target.tagName === "A"){
+      siteNav.classList.remove("open");
+      navToggle.setAttribute("aria-expanded", "false");
+    }
+  });
+
   render();
 
 </script>
