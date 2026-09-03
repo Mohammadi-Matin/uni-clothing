@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Uni Clothing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+
+  :root{
+    --bg: #F5F3EC;
+    --ink: #10202B;
+    --stone: #9FB0B8;
+    --stone-light: #E4E8E5;
+    --camel: #123A57;
+    --line: #DADFD9;
+    --hero-bg: #081420;
+    --cream: #F5F4EF;
+    --hero-copy: #93A6B0;
+    --max: 1120px;
+  }
+
+  *{ box-sizing: border-box; }
+
+  body::after{
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    pointer-events: none;
+    opacity: 0.025;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  ::selection{ background: var(--ink); color: var(--bg); }
+
+  html{ scroll-behavior: smooth; }
+
+  body{
+    margin:0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a{ color: inherit; text-decoration: none; }
+
+  h1,h2,h3{
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    margin: 0;
+    line-height: 1.05;
+  }
+
+  p{ margin: 0; }
+
+  button{
+    font-family: 'IBM Plex Sans', sans-serif;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: inherit;
+    font-size: 1em;
+  }
+
+  :focus-visible{
+    outline: 2px solid var(--camel);
+    outline-offset: 3px;
+  }
+
+  .frame{
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  /* ---------- top rule ---------- */
+
+  .top-rule{
+    height: 3px;
+    background: var(--camel);
+    width: 100%;
+  }
+
+  /* ---------- header ---------- */
+
+  .site-header{
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 30px 0 22px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .wordmark{
+    font-family: 'Fraunces', serif;
+    font-size: 1.5rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+  }
+
+  .site-nav{
+    display: flex;
+    gap: 36px;
+  }
+
+  .site-nav a{
+    font-size: 0.92rem;
+    color: var(--ink);
+    padding-bottom: 2px;
+    border-bottom: 1px solid transparent;
+  }
+
+  .site-nav a:hover, .site-nav a.active{
+    border-bottom-color: var(--ink);
+  }
+
+  .nav-toggle{
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: none;
+    padding: 0;
+  }
+
+  .nav-toggle span{
+    display: block;
+    height: 1px;
+    background: var(--ink);
+    width: 100%;
+  }
+
+  /* ---------- footer ---------- */
+
+  .site-footer{
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 26px 0 60px;
+    margin-top: 100px;
+    border-top: 1px solid var(--line);
+    font-size: 0.82rem;
+    color: var(--stone);
+  }
+
+  /* ---------- hero ---------- */
+
+  .hero-band{
+    position: relative;
+    left: 50%;
+    right: 50%;
+    width: 100vw;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    background: var(--hero-bg);
+    color: var(--cream);
+    overflow: hidden;
+  }
+
+  .hero-band::before{
+    content: "";
+    position: absolute;
+    inset: 0;
+    opacity: 0.05;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  .hero-inner{
+    position: relative;
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 128px 32px 108px;
+  }
+
+  .hero-inner h1{
+    font-size: clamp(4.2rem, 11vw, 8.4rem);
+    font-weight: 300;
+    letter-spacing: -0.01em;
+    overflow: hidden;
+  }
+
+  .hero-inner h1 span{
+    display: inline-block;
+  }
+
+  @media (prefers-reduced-motion: no-preference){
+    .hero-inner h1 span{
+      transform: translateY(112%);
+      animation: revealUp 900ms cubic-bezier(.16,1,.3,1) forwards;
+      animation-delay: 0.15s;
+    }
+  }
+
+  @keyframes revealUp{
+    to{ transform: translateY(0); }
+  }
+
+  .hero-tagline{
+    font-family: 'Fraunces', serif;
+    font-size: clamp(1.3rem, 2.6vw, 1.7rem);
+    font-weight: 300;
+    max-width: 30ch;
+    margin-top: 28px;
+    color: var(--cream);
+  }
+
+  .hero-sub{
+    font-size: 0.98rem;
+    max-width: 40ch;
+    margin-top: 16px;
+    color: var(--hero-copy);
+  }
+
+  .btn{
+    display: inline-block;
+    margin-top: 34px;
+    padding: 13px 26px;
+    border: 1px solid var(--ink);
+    font-size: 0.92rem;
+  }
+
+  .btn:hover{
+    background: var(--ink);
+    color: var(--bg);
+  }
+
+  .btn-invert{
+    display: inline-block;
+    margin-top: 34px;
+    padding: 13px 26px;
+    border: 1px solid var(--cream);
+    color: var(--cream);
+    font-size: 0.92rem;
+  }
+
+  .btn-invert:hover{
+    background: var(--cream);
+    color: var(--hero-bg);
+  }
+
+  @media (prefers-reduced-motion: no-preference){
+    .btn, .btn-invert{ transition: background 0.18s ease, color 0.18s ease; }
+  }
+
+  /* ---------- index / catalogue list ---------- */
+
+  .index-list{
+    margin-top: 56px;
+  }
+
+  .index-row{
+    display: grid;
+    grid-template-columns: 90px 1fr auto;
+    gap: 24px;
+    align-items: baseline;
+    padding: 22px 16px;
+    margin: 0 -16px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .index-row:first-child{
+    border-top: 1px solid var(--line);
+  }
+
+  @media (prefers-reduced-motion: no-preference){
+    .index-row{ transition: background-color 0.18s ease; }
+    .index-row *{ transition: color 0.18s ease; }
+  }
+
+  .index-row:hover{
+    background-color: var(--ink);
+  }
+
+  .index-row:hover .index-code,
+  .index-row:hover .index-name,
+  .index-row:hover .index-price{
+    color: var(--cream);
+  }
+
+  .index-code{
+    font-size: 0.85rem;
+    color: var(--camel);
+    letter-spacing: 0.02em;
+  }
+
+
+  .index-name{
+    font-family: 'Fraunces', serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+  }
+
+  .index-price{
+    font-size: 0.9rem;
+    color: var(--stone);
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .index-row a.index-name-link{
+    display:inline-block;
+  }
+
+  .index-row a.index-name-link:hover .index-name{
+    color: var(--camel);
+  }
+
+  /* ---------- manifesto ---------- */
+
+  .manifesto{
+    padding: 90px 0;
+    border-bottom: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 48px;
+  }
+
+  .manifesto-label{
+    font-size: 0.85rem;
+    color: var(--stone);
+  }
+
+  .manifesto p{
+    font-family: 'Fraunces', serif;
+    font-size: clamp(1.4rem, 2.4vw, 1.9rem);
+    font-weight: 300;
+    max-width: 26ch;
+    color: #302e29;
+  }
+
+  /* ---------- shop grid ---------- */
+
+  .page-heading{
+    padding: 64px 0 8px;
+  }
+
+  .page-heading h2{
+    font-size: clamp(2.4rem, 5vw, 3.4rem);
+    font-weight: 300;
+  }
+
+  .page-heading .index-code{
+    display:block;
+    margin-bottom: 10px;
+  }
+
+  .shop-grid{
+    margin-top: 48px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .shop-card{
+    background: var(--bg);
+    padding: 40px 28px 32px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  @media (prefers-reduced-motion: no-preference){
+    .shop-card{ transition: background-color 0.2s ease; }
+  }
+
+  .shop-card:hover{
+    background: var(--stone-light);
+  }
+
+  .shop-card .garment-art{
+    align-self: center;
+    width: 130px;
+    height: 168px;
+    color: var(--ink);
+    margin-bottom: 28px;
+  }
+
+  @media (prefers-reduced-motion: no-preference){
+    .shop-card .garment-art svg{ transition: transform 0.25s ease; }
+  }
+
+  .shop-card:hover .garment-art svg{
+    transform: scale(1.06);
+  }
+
+  .shop-card .index-code{
+    margin-bottom: 8px;
+  }
+
+  .shop-card h3{
+    font-size: 1.4rem;
+    font-weight: 400;
+    margin-bottom: 10px;
+  }
+
+  .shop-card .desc{
+    font-size: 0.9rem;
+    color: #4a473f;
+    flex-grow: 1;
+    margin-bottom: 22px;
+  }
+
+  .shop-card .card-footer{
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--line);
+    padding-top: 16px;
+  }
+
+  .shop-card .index-price{ color: var(--ink); }
+
+  #app{
+    opacity: 0;
+  }
+
+  @media (prefers-reduced-motion: no-preference){
+    #app{
+      animation: fadeIn 0.35s ease forwards;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    #app{ opacity: 1; }
+  }
+
+  @keyframes fadeIn{
+    to{ opacity: 1; }
+  }
+
+  .view-link{
+    font-size: 0.85rem;
+    border-bottom: 1px solid var(--ink);
+  }
+
+  .view-link:hover{
+    color: var(--camel);
+    border-bottom-color: var(--camel);
+  }
+
+  .breadcrumb a:hover{ color: var(--ink); }
+
+  /* ---------- product page ---------- */
+
+  .breadcrumb{
+    padding-top: 40px;
+    font-size: 0.85rem;
+    color: var(--stone);
+  }
+
+  .product-view{
+    padding: 40px 0 100px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 72px;
+  }
+
+  .product-art{
+    background: var(--stone-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 4/5;
+  }
+
+  .product-art svg{
+    width: 46%;
+    color: var(--ink);
+  }
+
+  .product-info .index-code{
+    display: block;
+    margin-bottom: 14px;
+  }
+
+  .product-info h2{
+    font-size: clamp(2rem, 3.6vw, 2.8rem);
+    font-weight: 400;
+    margin-bottom: 14px;
+  }
+
+  .product-info .price{
+    font-size: 1.05rem;
+    margin-bottom: 28px;
+  }
+
+  .product-info .desc{
+    font-size: 0.98rem;
+    color: #4a473f;
+    max-width: 44ch;
+    margin-bottom: 32px;
+  }
+
+  .detail-block{
+    padding: 18px 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .detail-block:last-of-type{
+    border-bottom: 1px solid var(--line);
+  }
+
+  .detail-block h4{
+    font-size: 0.8rem;
+    color: var(--stone);
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  .detail-block p, .detail-block ul{
+    font-size: 0.92rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .size-row{
+    display: flex;
+    gap: 10px;
+    margin: 26px 0 30px;
+  }
+
+  .size-opt{
+    border: 1px solid var(--line);
+    padding: 9px 16px;
+    font-size: 0.88rem;
+  }
+
+  .size-opt.selected{
+    border-color: var(--ink);
+    background: var(--ink);
+    color: var(--bg);
+  }
+
+  .add-bag{
+    width: 100%;
+    padding: 16px;
+    border: 1px solid var(--ink);
+    background: var(--ink);
+    color: var(--bg);
+    font-size: 0.95rem;
+  }
+
+  .add-bag:hover{ opacity: 0.85; }
+
+  .toast{
+    margin-top: 14px;
+    font-size: 0.85rem;
+    color: var(--camel);
+    min-height: 1.2em;
+  }
+
+  /* ---------- about ---------- */
+
+  .about-view{
+    padding: 40px 0 100px;
+  }
+
+  .about-lede{
+    max-width: 60ch;
+    font-family: 'Fraunces', serif;
+    font-size: clamp(1.4rem, 2.6vw, 1.9rem);
+    font-weight: 300;
+    margin: 24px 0 60px;
+    color: #302e29;
+  }
+
+  .about-body{
+    max-width: 62ch;
+    font-size: 0.98rem;
+    color: #4a473f;
+  }
+
+  .about-body p{ margin-bottom: 20px; }
+
+  .principles{
+    margin-top: 64px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    padding-top: 40px;
+    border-top: 1px solid var(--line);
+  }
+
+  .principles h4{
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 1.15rem;
+    margin-bottom: 10px;
+  }
+
+  .principles p{
+    font-size: 0.9rem;
+    color: #4a473f;
+  }
+
+  /* ---------- contact ---------- */
+
+  .contact-view{
+    padding: 40px 0 120px;
+  }
+
+  .contact-view .about-lede{ margin-bottom: 30px; }
+
+  .contact-view a.email{
+    font-family: 'Fraunces', serif;
+    font-size: 1.6rem;
+    border-bottom: 1px solid var(--ink);
+  }
+
+
+  /* ---------- garment panels ---------- */
+
+  .art-coat, .art-hoodie, .art-tshirt{
+    background: var(--stone-light);
+    box-shadow: inset 0 0 0 1px var(--line);
+  }
+
+  .art-coat svg, .art-hoodie svg, .art-tshirt svg{
+    color: var(--ink);
+  }
+
+  .shop-card .garment-art{
+    border-radius: 2px;
+  }
+
+  .product-art{
+    border-radius: 2px;
+  }
+
+  /* ---------- responsive ---------- */
+
+  @media (max-width: 860px){
+    .frame{ padding: 0 20px; }
+    .hero-inner{ padding: 88px 20px 72px; }
+    .manifesto{ grid-template-columns: 1fr; gap: 20px; }
+    .shop-grid{ grid-template-columns: 1fr; }
+    .product-view{ grid-template-columns: 1fr; gap: 32px; }
+    .principles{ grid-template-columns: 1fr; gap: 26px; }
+    .index-row{ grid-template-columns: 60px 1fr; row-gap: 6px; }
+    .index-price{ grid-column: 2; }
+  }
+
+  @media (max-width: 640px){
+    .nav-toggle{ display: flex; }
+
+    .site-header{
+      position: relative;
+    }
+
+    .site-nav{
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      gap: 0;
+      background: var(--bg);
+      border-bottom: 1px solid var(--line);
+      max-height: 0;
+      overflow: hidden;
+    }
+
+    @media (prefers-reduced-motion: no-preference){
+      .site-nav{ transition: max-height 0.25s ease; }
+    }
+
+    .site-nav.open{
+      max-height: 220px;
+    }
+
+    .site-nav a{
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--line);
+    }
+  }
+
+</style>
+</head>
+<body>
+
+  <div class="top-rule"></div>
+
+  <div class="frame">
+    <header class="site-header">
+      <a class="wordmark" href="#/home">Uni</a>
+      <nav class="site-nav" id="site-nav">
+        <a href="#/shop" data-route="shop">Shop</a>
+        <a href="#/about" data-route="about">About</a>
+        <a href="#/contact" data-route="contact">Contact</a>
+      </nav>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span>
+      </button>
+    </header>
+
+    <main id="app"></main>
+
+    <footer class="site-footer">
+      <span>Uni Clothing — Tehran</span>
+      <span>&copy; 2026</span>
+    </footer>
+  </div>
+
+<script>
+
+  const PRODUCTS = [
+    {
+      id: "01",
+      code: "UNI—01",
+      name: "The Overcoat",
+      price: "8,200,000",
+      short: "A double-breasted overcoat cut from heavy virgin wool, built to outlast its first decade.",
+      description: "Cut for either shoulder, The Overcoat is built from one continuous piece of heavy virgin wool and finished with a cupro lining sewn by hand at the seams. There is nothing on it that does not need to be there.",
+      composition: "100% virgin wool shell, cupro lining, horn buttons",
+      fit: "Unisex fit, sits at mid-thigh. Order your usual size.",
+      care: "Dry clean only. Store on a wide hanger.",
+      art: "coat"
+    },
+    {
+      id: "02",
+      code: "UNI—02",
+      name: "The Hoodie",
+      price: "5,400,000",
+      short: "A heavyweight loopback cotton hoodie, built like outerwear rather than a layering piece.",
+      description: "Cut from a dense loopback cotton usually reserved for tailoring linings, The Hoodie holds its shape wash after wash. A single kangaroo pocket, flat drawcords, and nothing printed on it.",
+      composition: "440gsm loopback cotton, ribbed cuffs and hem",
+      fit: "Unisex fit, relaxed through the body. True to size.",
+      care: "Machine wash cold, hang dry.",
+      art: "hoodie"
+    },
+    {
+      id: "03",
+      code: "UNI—03",
+      name: "The T-Shirt",
+      price: "5,100,000",
+      short: "A heavyweight cotton t-shirt cut from a single roll of fabric, with no side seam.",
+      description: "The T-Shirt is cut tubular, from a single roll of heavyweight cotton, so there is no seam running down either side. It is the piece we spent the longest getting right precisely because it looks the simplest.",
+      composition: "100% combed heavyweight cotton, 240gsm",
+      fit: "Unisex fit, straight body. Order your usual size.",
+      care: "Machine wash cold, hang dry.",
+      art: "tshirt"
+    }
+  ];
+
+  const ART = {
+    coat: `<svg viewBox="0 0 200 260" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M100 14 L78 34 L60 30 L18 58 L34 96 L54 82 L54 246 L146 246 L146 82 L166 96 L182 58 L140 30 L122 34 Z" />
+      <path d="M78 34 L100 60 L122 34" />
+      <path d="M60 30 L78 46" />
+      <path d="M140 30 L122 46" />
+      <path d="M64 158 L136 158" />
+      <path d="M42 168 L60 168 L60 180 L42 180 Z" />
+      <path d="M140 168 L158 168 L158 180 L140 180 Z" />
+      <circle cx="82" cy="90" r="2" fill="currentColor" stroke="none"/>
+      <circle cx="82" cy="118" r="2" fill="currentColor" stroke="none"/>
+      <circle cx="82" cy="146" r="2" fill="currentColor" stroke="none"/>
+      <circle cx="118" cy="90" r="2" fill="currentColor" stroke="none"/>
+      <circle cx="118" cy="118" r="2" fill="currentColor" stroke="none"/>
+      <circle cx="118" cy="146" r="2" fill="currentColor" stroke="none"/>
+    </svg>`,
+    hoodie: `<svg viewBox="0 0 200 260" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M70 10 C70 -2 130 -2 130 10 L136 36 C118 48 82 48 64 36 Z" />
+      <path d="M64 36 L20 62 L34 98 L58 80 L58 250 L142 250 L142 80 L166 98 L180 62 L136 36" />
+      <path d="M84 38 C84 50 116 50 116 38" />
+      <path d="M92 42 L90 68" />
+      <path d="M108 42 L110 68" />
+      <circle cx="90" cy="70" r="2.2" fill="currentColor" stroke="none"/>
+      <circle cx="110" cy="70" r="2.2" fill="currentColor" stroke="none"/>
+      <path d="M76 168 C76 160 124 160 124 168 L124 196 C108 204 92 204 76 196 Z" />
+      <path d="M58 234 L142 234" />
+      <path d="M34 90 L46 96" />
+      <path d="M166 90 L154 96" />
+    </svg>`,
+    tshirt: `<svg viewBox="0 0 200 260" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M100 22 C86 22 84 30 82 34 L58 26 L24 52 L40 84 L60 72 L60 246 L140 246 L140 72 L160 84 L176 52 L142 26 L118 34 C116 30 114 22 100 22 Z" />
+      <path d="M82 34 C82 46 118 46 118 34" />
+    </svg>`
+  };
+
+  function indexList(){
+    return `
+      <div class="index-list">
+        ${PRODUCTS.map(p => `
+          <div class="index-row">
+            <span class="index-code">${p.code}</span>
+            <a class="index-name-link" href="#/product/${p.id}">
+              <span class="index-name">${p.name}</span>
+            </a>
+            <span class="index-price">${p.price} تومان</span>
+          </div>
+        `).join("")}
+      </div>
+    `;
+  }
+
+  function homeView(){
+    return `
+      <div class="hero-band">
+        <div class="hero-inner">
+          <h1><span>Uni</span></h1>
+          <p class="hero-tagline">Three garments. Considered without end.</p>
+          <p class="hero-sub">Cut in Tehran to a discipline usually reserved for an entrance exam, not an overcoat. Est. 2026.</p>
+          <a class="btn-invert" href="#/shop">View the Collection</a>
+        </div>
+      </div>
+
+      ${indexList()}
+
+      <section class="manifesto">
+        <span class="manifesto-label">On restraint</span>
+        <p>We make three pieces a year, not thirty. What we keep out of a garment matters as much as what stays in.</p>
+      </section>
+    `;
+  }
+
+  function shopView(){
+    return `
+      <section class="page-heading">
+        <span class="index-code">Shop</span>
+        <h2>The Collection</h2>
+      </section>
+
+      <div class="shop-grid">
+        ${PRODUCTS.map(p => `
+          <div class="shop-card">
+            <div class="garment-art art-${p.art}">${ART[p.art]}</div>
+            <span class="index-code">${p.code}</span>
+            <h3>${p.name}</h3>
+            <p class="desc">${p.short}</p>
+            <div class="card-footer">
+              <span class="index-price">${p.price} تومان</span>
+              <a class="view-link" href="#/product/${p.id}">View piece</a>
+            </div>
+          </div>
+        `).join("")}
+      </div>
+    `;
+  }
+
+  function productView(id){
+    const p = PRODUCTS.find(x => x.id === id) || PRODUCTS[0];
+    return `
+      <div class="breadcrumb">
+        <a href="#/shop">Shop</a> / ${p.code}
+      </div>
+      <section class="product-view">
+        <div class="product-art art-${p.art}">${ART[p.art]}</div>
+        <div class="product-info">
+          <span class="index-code">${p.code}</span>
+          <h2>${p.name}</h2>
+          <p class="price">${p.price} تومان</p>
+          <p class="desc">${p.description}</p>
+
+          <div class="size-row" id="size-row">
+            ${["XS","S","M","L","XL"].map((s,i) => `<button class="size-opt${i===2 ? ' selected':''}" data-size="${s}">${s}</button>`).join("")}
+          </div>
+
+          <button class="add-bag" id="add-bag">Add to Bag</button>
+          <p class="toast" id="toast"></p>
+
+          <div class="detail-block">
+            <h4>Composition</h4>
+            <p>${p.composition}</p>
+          </div>
+          <div class="detail-block">
+            <h4>Fit</h4>
+            <p>${p.fit}</p>
+          </div>
+          <div class="detail-block">
+            <h4>Care</h4>
+            <p>${p.care}</p>
+          </div>
+        </div>
+      </section>
+    `;
+  }
+
+  function aboutView(){
+    return `
+      <section class="about-view">
+        <span class="index-code">About</span>
+        <p class="about-lede">Uni was built on a simple bet: that a customer will always remember three pieces made without compromise longer than thirty made without intent.</p>
+        <div class="about-body">
+          <p>Every piece is cut and finished in ateliers in Tehran, by people who have spent decades doing exactly this and nothing else. We hold each garment to a standard closer to an examination than a production line — it either passes, or it does not leave the workshop.</p>
+          <p>We do not chase seasons. A piece stays in the collection until we find a way to make it better, and it leaves only when it is retired, not discounted.</p>
+        </div>
+
+        <div class="principles">
+          <div>
+            <h4>Materials</h4>
+            <p>Only natural, mill-sourced fabrics — wool, cotton, horn, corozo. Nothing synthetic touches skin.</p>
+          </div>
+          <div>
+            <h4>Construction</h4>
+            <p>Hand-finished seams and full canvassing where it matters, on every piece, without exception.</p>
+          </div>
+          <div>
+            <h4>Discipline</h4>
+            <p>Three pieces, reviewed and re-cut each year, rather than a calendar of new ones.</p>
+          </div>
+        </div>
+      </section>
+    `;
+  }
+
+  function contactView(){
+    return `
+      <section class="contact-view">
+        <span class="index-code">Contact</span>
+        <p class="about-lede">For fittings, made-to-order enquiries, or press.</p>
+        <a class="email" href="mailto:hello@uniclothing.com">hello@uniclothing.com</a>
+      </section>
+    `;
+  }
+
+  function render(){
+    const hash = location.hash || "#/home";
+    const parts = hash.replace("#/", "").split("/");
+    const route = parts[0] || "home";
+    const app = document.getElementById("app");
+
+    document.querySelectorAll(".site-nav a").forEach(a => {
+      a.classList.toggle("active", a.dataset.route === route);
+    });
+
+    if (route === "shop") app.innerHTML = shopView();
+    else if (route === "about") app.innerHTML = aboutView();
+    else if (route === "contact") app.innerHTML = contactView();
+    else if (route === "product") app.innerHTML = productView(parts[1]);
+    else app.innerHTML = homeView();
+
+    window.scrollTo(0, 0);
+    bindInteractions();
+  }
+
+  function bindInteractions(){
+    document.querySelectorAll(".size-opt").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".size-opt").forEach(b => b.classList.remove("selected"));
+        btn.classList.add("selected");
+      });
+    });
+
+    const addBtn = document.getElementById("add-bag");
+    if (addBtn){
+      addBtn.addEventListener("click", () => {
+        document.getElementById("toast").textContent = "Added to bag — checkout is coming soon.";
+      });
+    }
+  }
+
+  window.addEventListener("hashchange", render);
+
+  const navToggle = document.getElementById("nav-toggle");
+  const siteNav = document.getElementById("site-nav");
+  navToggle.addEventListener("click", () => {
+    const isOpen = siteNav.classList.toggle("open");
+    navToggle.setAttribute("aria-expanded", String(isOpen));
+  });
+  siteNav.addEventListener("click", (e) => {
+    if (e.target.tagName === "A"){
+      siteNav.classList.remove("open");
+      navToggle.setAttribute("aria-expanded", "false");
+    }
+  });
+
+  render();
+
+</script>
+
+</body>
+</html>
